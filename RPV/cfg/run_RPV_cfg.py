@@ -37,11 +37,8 @@ else: # for production
         comp.splitFactor = min(len(comp.files), 1000)
 
 ##__________________________________________________________________||
-from CMGTools.TTHAnalysis.analyzers.susyCore_modules_cff import *
-sequence = susyCoreSequence
+from CMGTools.RPV.sequence import *
 sequence = cfg.Sequence(sequence)
-
-sequence.remove(susyScanAna)
 
 ##__________________________________________________________________||
 preprocessor = None
