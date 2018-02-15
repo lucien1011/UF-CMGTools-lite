@@ -12,7 +12,7 @@ mu_id_loose     = "POG_ID_Loose"
 mu_id_selection = "POG_ID_Tight"
 lepAna.loose_muon_pt               = 10.
 lepAna.loose_muon_eta              = 2.5
-lepAna.loose_muon_id               = mu_id_loose
+lepAna.loose_muon_id               = mu_id_selection
 lepAna.loose_muon_dxy              = 999.
 lepAna.loose_muon_dz               = 999.
 lepAna.loose_muon_relIso           = 0.12
@@ -27,7 +27,7 @@ ele_id_loose     = 'POG_Cuts_ID_SPRING15_25ns_v1_ConvVetoDxyDz_Loose'
 ele_id_veto      = 'POG_Cuts_ID_SPRING15_25ns_v1_ConvVetoDxyDz_Veto'
 ele_ea      = "Spring15_25ns_v1"
 ele_ea_50ns = "Spring15_50ns_v1"
-lepAna.loose_electron_id           = ele_id_loose
+lepAna.loose_electron_id           = ele_id_selection
 lepAna.loose_electron_pt           = 10
 lepAna.loose_electron_eta          = 2.5
 lepAna.loose_electron_dxy          = 0.118
@@ -43,13 +43,13 @@ lepAna.miniIsolationPUCorr = None #Will use the correction defined for the indiv
 
 ##__________________________________________________________________||
 ## Photons (used for the veto)
-pho_id_loose                       = "POG_SPRING15_25ns_Loose"
-pho_id_selection                   = "POG_SPRING15_25ns_Tight"
-pho_id_selection_fakeEnriched      = "POG_SPRING15_25ns_Tight_noChaHadIso_noSigmaIEtaIEta"
+pho_id_loose                       = "POG_SPRING16_25ns_Loose"
+pho_id_selection                   = "POG_SPRING16_25ns_Tight"
+pho_id_selection_fakeEnriched      = "POG_SPRING16_25ns_Tight_noChaHadIso_noSigmaIEtaIEta"
 pho_ea = "PHYS14_25ns_v1"
-pho_id_loose_50ns                  = "POG_SPRING15_50ns_Loose"
-pho_id_selection_50ns              = "POG_SPRING15_50ns_Tight"
-pho_id_selection_fakeEnriched_50ns = "POG_SPRING15_50ns_Tight_noChaHadIso_noSigmaIEtaIEta"
+pho_id_loose_50ns                  = "POG_SPRING16_50ns_Loose"
+pho_id_selection_50ns              = "POG_SPRING16_50ns_Tight"
+pho_id_selection_fakeEnriched_50ns = "POG_SPRING16_50ns_Tight_noChaHadIso_noSigmaIEtaIEta"
 pho_ea_50ns = "PHYS14_50ns_v1"
 photonAna.ptMin                       = 25
 photonAna.etaMax                      = 2.5
@@ -59,9 +59,17 @@ photonAna.gamma_isoCorr               = 'rhoArea'
 photonAna.checkGen                    = True
 
 ##__________________________________________________________________||
+## Taus
+# https://twiki.cern.ch/twiki/bin/view/CMS/TauIDRecommendation13TeV
+tauAna.etaMax = 2.3
+tauAna.vetoLeptons = True ## use our own leptons rather than the tau
+                          ## working group's definition - we just veto
+tauAna.vetoLeptonsPOG = False
+
+##__________________________________________________________________||
 # Jets (for event variables do apply the jetID and not PUID yet)
 jet_pt_selection = 40.
-jet_eta_selection = 3.
+jet_eta_selection = 2.5
 jet_jec_mcGT   = "Summer16_23Sep2016V3_MC"
 jet_jec_fsGT   = "Spring16_FastSimV1_MC"
 jet_jec_dataGT = [(1,"Summer16_23Sep2016BCDV3_DATA"),(276831,"Summer16_23Sep2016EFV3_DATA"),(278802,"Summer16_23Sep2016GV3_DATA"),(280919,"Summer16_23Sep2016HV3_DATA")]
@@ -133,5 +141,5 @@ sequence = susyCoreSequence
 sequence = cfg.Sequence(sequence)
 
 sequence.remove(susyScanAna)
-#sequence.append(rpvEvtSelector)
+sequence.append(rpvEvtSelector)
 sequence.append(treeProducer)
