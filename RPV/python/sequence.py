@@ -123,9 +123,15 @@ treeProducer = cfg.Analyzer(
      isCompressed = 9
 )
 
+from CMGTools.RPV.RPVEventSelector import *
+rpvEvtSelector = cfg.Analyzer(
+    RPVEventSelector,name="RPVEventSelector",
+    )
+
 ##__________________________________________________________________||
 sequence = susyCoreSequence
 sequence = cfg.Sequence(sequence)
 
 sequence.remove(susyScanAna)
+#sequence.append(rpvEvtSelector)
 sequence.append(treeProducer)
