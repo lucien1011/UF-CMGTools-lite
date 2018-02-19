@@ -16,35 +16,28 @@ git cms-init
 #### Add the central cmg-cmssw repository to get the Heppy 80X branch
 
 ```
-git remote add cmg-central https://github.com/CERN-PH-CMG/cmg-cmssw.git -f  -t heppy_80X
+git remote add UF-Heppy git@github.com:lucien1011/UF-Heppy.git -f -t heppy_80X_RPV
 ```
 
 #### Configure the sparse checkout, and get the base heppy packages
 
 ```
 cp /afs/cern.ch/user/c/cmgtools/public/sparse-checkout_80X_heppy .git/info/sparse-checkout
-git checkout -b heppy_80X cmg-central/heppy_80X
-```
-
-#### Add your mirror, and push the 80X branch to it
-
-```
-git remote add origin git@github.com:YOUR_GITHUB_REPOSITORY/cmg-cmssw.git
-git push -u origin heppy_80X
+git checkout -b heppy_80X_RPV UF-Heppy/heppy_80X_RPV
 ```
 
 #### Now get the CMGTools subsystem from the cmgtools-lite repository
 
 ```
-git clone -o cmg-central https://github.com/CERN-PH-CMG/cmgtools-lite.git -b 80X CMGTools
+git clone -o UF-CMGTools-lite git@github.com:lucien1011/UF-CMGTools-lite.git -b heppy_80X_RPV CMGTools
 cd CMGTools
 ```
 
-#### Add your fork, and push the 80X branch to it
+#### Add your fork, and push the 80X branch to it (optional)
 
 ```
 git remote add origin  git@github.com:YOUR_GITHUB_REPOSITORY/cmgtools-lite.git
-git push -u origin 80X
+git push -u origin heppy_80X_RPV
 ```
 
 #### Compile
@@ -52,4 +45,11 @@ git push -u origin 80X
 ```
 cd $CMSSW_BASE/src
 scram b -j 8
+```
+
+#### To produce ntuples
+
+```
+cd $CMSSW_BASE/CMGTools/RPV/cfg/
+heppy TEST_01 run_RPV_cfg.py -N 100 -o test=1 # To run over 100 events for testing purpose
 ```
