@@ -10,6 +10,7 @@ from math import ceil
 import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 from UFTier2Utils import listdir_uberftp
+from CERNUtils import listdir_psi
 
 MODULES = []
 
@@ -114,7 +115,11 @@ if len(options.chunks) != 0 and len(options.datasets) != 1:
     exit()
 
 jobs = []
-for ftpfname in [n for n in listdir_uberftp(args[0]) if n.endswith(".root") ]:
+if "lxplus" in os.environ["HOSTNAME"]:
+    dirs = listdir_psi(args[0])
+elif "ihepa.ufl.edu" in os.environ["HOSTNAME"]:
+    dirs = listdir_uberftp(args[0])
+for ftpfname in [n for n in dirs if n.endswith(".root") ]:
     treename = options.tree
     fname = "root://cmsio5.rc.ufl.edu/"+args[0].replace("/cms/data","")+ftpfname
 
