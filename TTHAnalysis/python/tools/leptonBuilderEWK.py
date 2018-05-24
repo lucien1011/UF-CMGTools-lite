@@ -11,8 +11,10 @@ if "mt2_bisect_cc.so" not in ROOT.gSystem.GetLibraries():
     elif os.path.isdir('/mnt/t3nfs01/'):
         ROOT.gROOT.LoadMacro("/mnt/t3nfs01/data01/shome/cheidegg/s/mT2code/mt2_bisect.cc")
         print "Loaded from PSI"
-    else:
+    elif os.path.isdir("/afs/cern.ch/user/c/cheidegg/public/mT2code/"):
         ROOT.gROOT.LoadMacro("/afs/cern.ch/user/c/cheidegg/public/mT2code/mt2_bisect.cc")
+    else:
+        ROOT.gROOT.LoadMacro("/home/lucien/SUSY/RA5/Misc/mT2code/mt2_bisect.cc")
 
 from ROOT import mt2_bisect
 

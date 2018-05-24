@@ -32,6 +32,9 @@ MODULES.append( ('leptonJetReCleanerSusyRA5', lambda : LeptonJetReCleaner("Mini"
                    lambda lep,ht : lep.pt>10 and _susy2lss_lepConePt1015(lep) and _susy2lss_multiIso(lep) and _susy2lss_lepId_CB(lep) and (ht>300 or _susy2lss_idIsoEmu_cuts(lep)), # cuts applied on top of loose
                    cleanJet = lambda lep,jet,dr : dr<0.4,
                    selectJet = lambda jet: abs(jet.eta)<2.4,
+                   cleanTau = lambda lep,tau,dr: dr<0.4,
+                   looseTau = lambda tau: tau.pt > 20 and abs(tau.eta)<2.3 and abs(tau.dxy) < 1000 and abs(tau.dz) < 0.2 and tau.idMVANewDM >= 1 and tau.idDecayMode, # used in cleaning
+                   tightTau = lambda tau: tau.idMVANewDM == 3, # on top of loose
                    cleanJetsWithTaus = False,
                    doVetoZ = True,
                    doVetoLMf = True,

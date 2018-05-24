@@ -2,6 +2,9 @@ from CMGTools.TTHAnalysis.treeReAnalyzer import *
 from PhysicsTools.HeppyCore.utils.deltar import matchObjectCollection3
 import ROOT
 
+#jetVarToStore = "pt eta phi mass btagCSV rawPt"
+jetVarToStore = "pt eta phi mass btagCSV"
+
 class MyVarProxy:
     def __init__(self,lep):
         self._ob = lep
@@ -86,7 +89,7 @@ class LeptonJetReCleaner:
 
 
         if self.storeJetVariables:
-            for jfloat in "pt eta phi mass btagCSV rawPt".split():
+            for jfloat in jetVarToStore.split():
                 for key in self.systsJEC:
                     biglist.append( ("JetSel"+label+self.systsJEC[key]+"_"+jfloat,"F",20,"nJetSel"+label) )
 
@@ -155,16 +158,16 @@ class LeptonJetReCleaner:
         if self.storeJetVariables:
             #print postfix, self.label
             if postfix==self.label:
-                for jfloat in "pt eta phi mass btagCSV rawPt".split():
+                for jfloat in jetVarToStore.split():
                     jetret[jfloat] = []
                     discjetret[jfloat] = []
                 for idx in ret["iJSel"+postfix]:
                     jet = jetcollcleaned[idx] if idx >= 0 else jetcolldiscarded[-1-idx]
-                    for jfloat in "pt eta phi mass btagCSV rawPt".split():
+                    for jfloat in jetVarToStore.split():
                         jetret[jfloat].append( getattr(jet,jfloat) )
                 for idx in ret["iDiscJSel"+postfix]:
                     jet = jetcollcleaned[idx] if idx >= 0 else jetcolldiscarded[-1-idx]
-                    for jfloat in "pt eta phi mass btagCSV rawPt".split():
+                    for jfloat in jetVarToStore.split():
                         discjetret[jfloat].append( getattr(jet,jfloat) )
          # 5. compute the sums
         ret["nJet"+self.strBJetPt+postfix] = 0; ret["htJet"+self.strBJetPt+"j"+postfix] = 0; ret["mhtJet"+self.strBJetPt+postfix] = 0; ret["nBJetLoose"+self.strBJetPt+postfix] = 0; ret["nBJetMedium"+self.strBJetPt+postfix] = 0
