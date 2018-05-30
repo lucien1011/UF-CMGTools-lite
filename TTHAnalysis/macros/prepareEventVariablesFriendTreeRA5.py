@@ -119,11 +119,16 @@ if "lxplus" in os.environ["HOSTNAME"]:
     dirs = listdir_psi(args[0])
 elif "ihepa.ufl.edu" in os.environ["HOSTNAME"]:
     dirs = listdir_uberftp(args[0])
+else:
+    dirs = listdir_psi(args[0])
 for ftpfname in [n for n in dirs if n.endswith(".root") ]:
     treename = options.tree
-    fname = "root://cmsio5.rc.ufl.edu/"+args[0].replace("/cms/data","")+ftpfname
-
-    #if not os.path.exists(fname): continue
+    if "ihepa.ufl.edu" in os.environ["HOSTNAME"]:
+        fname = "root://cmsio5.rc.ufl.edu/"+args[0].replace("/cms/data","")+ftpfname
+    elif "lxplus" in os.environ["HOSTNAME"]:
+        fname = args[0]+ftpfname
+    else:
+        fname = args[0]+ftpfname
 
     short = os.path.basename(ftpfname).replace(".root","")
     D = short
