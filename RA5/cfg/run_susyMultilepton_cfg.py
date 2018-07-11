@@ -16,7 +16,7 @@ from PhysicsTools.HeppyCore.framework.heppy_loop import getHeppyOption
 #-------- SET OPTIONS AND REDEFINE CONFIGURATIONS -----------
 
 is50ns = getHeppyOption("is50ns",False)
-analysis = getHeppyOption("analysis","ttH")
+analysis = getHeppyOption("analysis","susy")
 runData = getHeppyOption("runData",False)
 runDataQCD = getHeppyOption("runDataQCD",False)
 runQCDBM = getHeppyOption("runQCDBM",False)
