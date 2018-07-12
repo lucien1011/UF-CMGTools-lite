@@ -17,8 +17,6 @@ from PhysicsTools.HeppyCore.framework.heppy_loop import getHeppyOption
 # SET OPTIONS AND REDEFINE CONFIGURATION
 
 analysis                        = "susy"
-runData                         = False
-runDataQCD                      = False 
 runQCDBM                        = False 
 runFRMC                         = False
 saveSuperClusterVariables       = False
@@ -32,6 +30,7 @@ isTest                          = True
 selectedEvents                  = ""
 keepLHEWeights                  = False
 fast                            = True
+test                            = '1'
 
 isolation = "miniIso"
 sample = "main"
@@ -181,7 +180,7 @@ ttHJetTauAna = cfg.Analyzer(
 
 # ____________________________________________________________________________________________________ ||
 # TreeProducer
-from CMGTools.TTHAnalysis.analyzers.treeProducerSusyMultilepton import * 
+from CMGTools.RA5.analyzers.treeProducerSusyRA5 import * 
 
 ttHLepSkim.allowLepTauComb = True
 susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
@@ -195,11 +194,11 @@ tauTypeSusy.addVariables([
         NTupleVariable("mcUCSXMatchId", lambda x : x.mcUCSXMatchId if hasattr(x,'mcUCSXMatchId') else -1, mcOnly=True, help="MC truth matching a la UCSX"),
         ])
 photonAna.do_mc_match = True
-susyMultilepton_collections.update({ # for conversion studies
+susyRA5_collections.update({ # for conversion studies
         "selectedPhotons"    : NTupleCollection("PhoGood", photonTypeSusy, 10, help="Selected photons"),
         }) 
-del susyMultilepton_collections["discardedJets"]
-susyMultilepton_collections.update({"discardedJets"   : NTupleCollection("DiscJet", jetTypeSusySuperLight, 15, help="Jets discarted in the jet-lepton cleaning (JEC)")
+del susyRA5_collections["discardedJets"]
+susyRA5_collections.update({"discardedJets"   : NTupleCollection("DiscJet", jetTypeSusySuperLight, 15, help="Jets discarted in the jet-lepton cleaning (JEC)")
                                         })
 
 # for electron scale and resolution checks
@@ -227,11 +226,11 @@ if saveSuperClusterVariables:
 ])
 
 if not removeJecUncertainty:
-    susyMultilepton_globalObjects.update({
+    susyRA5_globalObjects.update({
             "met_jecUp" : NTupleObject("met_jecUp", metType, help="PF E_{T}^{miss}, after type 1 corrections (JEC plus 1sigma)"),
             "met_jecDown" : NTupleObject("met_jecDown", metType, help="PF E_{T}^{miss}, after type 1 corrections (JEC minus 1sigma)"),
             })
-    susyMultilepton_collections.update({
+    susyRA5_collections.update({
             "cleanJets_jecUp"       : NTupleCollection("Jet_jecUp",     jetTypeSusyExtraLight, 15, help="Cental jets after full selection and cleaning, sorted by pt (JEC plus 1sigma)"),
             "cleanJets_jecDown"     : NTupleCollection("Jet_jecDown",     jetTypeSusyExtraLight, 15, help="Cental jets after full selection and cleaning, sorted by pt (JEC minus 1sigma)"),
             "discardedJets_jecUp"   : NTupleCollection("DiscJet_jecUp", jetTypeSusySuperLight if analysis=='susy' else jetTypeSusyExtraLight, 15, help="Jets discarted in the jet-lepton cleaning (JEC +1sigma)"),
@@ -241,14 +240,14 @@ if not removeJecUncertainty:
 # ____________________________________________________________________________________________________ ||
 ## Tree Producer
 treeProducer = cfg.Analyzer(
-     AutoFillTreeProducer, name='treeProducerSusyMultilepton',
+     AutoFillTreeProducer, name='treeProducerSusyRA5',
      vectorTree = True,
      saveTLorentzVectors = False,  # can set to True to get also the TLorentzVectors, but trees will be bigger
      defaultFloatType = 'F', # use Float_t for floating point
      PDFWeights = PDFWeights,
-     globalVariables = susyMultilepton_globalVariables,
-     globalObjects = susyMultilepton_globalObjects,
-     collections = susyMultilepton_collections,
+     globalVariables = susyRA5_globalVariables,
+     globalObjects = susyRA5_globalObjects,
+     collections = susyRA5_collections,
 )
 
 # ____________________________________________________________________________________________________ ||
@@ -323,22 +322,22 @@ triggerFlagsAna.checkL1Prescale = True
 #from CMGTools.RootTools.samples.samples_13TeV_RunIISpring16MiniAODv1 import *
 #from CMGTools.RootTools.samples.samples_13TeV_RunIISpring16MiniAODv2 import *
 from CMGTools.RootTools.samples.samples_13TeV_RunIISummer16MiniAODv2 import *
-from CMGTools.RootTools.samples.samples_13TeV_signals import *
-from CMGTools.RootTools.samples.samples_13TeV_80X_susySignalsPriv import *
-from CMGTools.RootTools.samples.samples_13TeV_DATA2016 import *
+#from CMGTools.RootTools.samples.samples_13TeV_signals import *
+#from CMGTools.RootTools.samples.samples_13TeV_80X_susySignalsPriv import *
+#from CMGTools.RootTools.samples.samples_13TeV_DATA2016 import *
 from CMGTools.HToZZ4L.tools.configTools import printSummary, configureSplittingFromTime, cropToLumi, prescaleComponents, insertEventSelector
 
 samples = [
-            ## DYJetsToLL_M10to50, DYJetsToLL_M10to50_ext, 
-            DYJetsToLL_M10to50_LO, 
+            #TTJets, TTJets_DiLepton, TTJets_SingleLeptonFromT, TTJets_SingleLeptonFromTbar, 
+            TT_pow, TT_pow_ext3, 
             ## DYJetsToLL_M50, 
             DYJetsToLL_M50_LO_ext, DYJetsToLL_M50_LO_ext2, 
+            ## DYJetsToLL_M10to50, DYJetsToLL_M10to50_ext, 
+            DYJetsToLL_M10to50_LO, 
             # GGHZZ4L, 
             #TBarToLeptons_tch_powheg, TBar_tWch, 
             #TToLeptons_sch_amcatnlo, TToLeptons_tch_amcatnlo, TToLeptons_tch_powheg, T_tWch, 
             TGJets, TTGJets, 
-            #TTJets, TTJets_DiLepton, TTJets_SingleLeptonFromT, TTJets_SingleLeptonFromTbar, 
-            TT_pow, TT_pow_ext3, 
             #TTTT, 
             VHToNonbb, WGToLNuG, 
             # #WJetsToLNu, 
@@ -386,7 +385,6 @@ preprocessor = None
 
 # ____________________________________________________________________________________________________ ||
 #-------- HOW TO RUN -----------
-test = getHeppyOption('test')
 if test == '1':
     comp = selectedComponents[0]
     comp.files = comp.files[:1]
@@ -466,7 +464,7 @@ output_service = cfg.Service(
     TFileService,
     'outputfile',
     name="outputfile",
-    fname='treeProducerSusyMultilepton/tree.root',
+    fname='treeProducerSusyRA5/tree.root',
     option='recreate'
     )    
 outputService.append(output_service)
