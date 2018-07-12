@@ -358,9 +358,30 @@ from CMGTools.HToZZ4L.tools.configTools import printSummary, configureSplittingF
 selectedComponents = [TTLep_pow]
 
 if analysis=='susy':
-    samples = [DYJetsToLL_M10to50, DYJetsToLL_M50, DYJetsToLL_M10to50_LO, DYJetsToLL_M50_LO, GGHZZ4L, TBarToLeptons_tch_powheg, TBar_tWch, TGJets, TTGJets, TTJets, TTJets_DiLepton, TTJets_SingleLeptonFromT, 
-               TTJets_SingleLeptonFromTbar, TTTT, TT_pow_ext4, TToLeptons_sch_amcatnlo, TToLeptons_tch_amcatnlo, TToLeptons_tch_powheg, T_tWch, VHToNonbb, WGToLNuG, WJetsToLNu, WJetsToLNu_LO, 
-               WWDouble, WWTo2L2Nu, WWW, WWZ, WZTo3LNu, WZTo3LNu_amcatnlo, WZZ, WpWpJJ, ZGTo2LG, ZZTo4L, ZZZ, tZq_ll]
+    samples = [
+            ## DYJetsToLL_M10to50, DYJetsToLL_M10to50_ext, 
+            DYJetsToLL_M10to50_LO, 
+            ## DYJetsToLL_M50, 
+            DYJetsToLL_M50_LO_ext, DYJetsToLL_M50_LO_ext2, 
+            # GGHZZ4L, 
+            #TBarToLeptons_tch_powheg, TBar_tWch, 
+            #TToLeptons_sch_amcatnlo, TToLeptons_tch_amcatnlo, TToLeptons_tch_powheg, T_tWch, 
+            TGJets, TTGJets, 
+            #TTJets, TTJets_DiLepton, TTJets_SingleLeptonFromT, TTJets_SingleLeptonFromTbar, 
+            TT_Pow, TT_Pow_ext3, TT_pow_ext4, 
+            #TTTT, 
+            VHToNonbb, WGToLNuG, 
+            # #WJetsToLNu, 
+            WJetsToLNu_LO, 
+            WJetsToLNu_LO_ext,
+            WWDoubleTo2L, 
+            #WWTo2L2Nu, WWW, WWZ, WZZ, WpWpJJ, ZGTo2LG, ZZTo4L, ZZZ, tZq_ll, 
+            WZTo3LNu,
+            ##WZTo3LNu_amcatnlo,
+            TTWToLNu_ext,TTWToLNu_ext2,
+            TTZToLLNuNu_ext,TTZToLLNuNu_m1to10,
+            TTHnobb_pow, 
+            ]
    
     samples_LHE = [TTHnobb_pow, TTLLJets_m1to10, TTWToLNu, TTW_LO, TTZToLLNuNu, TTZ_LO,]
     

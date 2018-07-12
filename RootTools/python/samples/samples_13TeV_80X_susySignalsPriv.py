@@ -39,19 +39,20 @@ T2tt = []
 
 ## T2ttDeg
 ## ------------------------------------------------------
-T2ttDeg_mStop350_mChi330_4bodydec = kreator.makeMCComponentFromEOS('T2ttDeg_mStop350_mChi330_4bodydec', '/T2ttDeg_mStop350_mChi330_4bodydec_for76X/', '/store/cmst3/group/susy/gpetrucc/13TeV/RunIISpring16MiniAODv2/%s',".*root", 3.78661)
+#T2ttDeg_mStop350_mChi330_4bodydec = kreator.makeMCComponentFromEOS('T2ttDeg_mStop350_mChi330_4bodydec', '/T2ttDeg_mStop350_mChi330_4bodydec_for76X/', '/store/cmst3/group/susy/gpetrucc/13TeV/RunIISpring16MiniAODv2/%s',".*root", 3.78661)
 #T2ttDeg_mStop350_mChi330_4bodydec_lepOnly = kreator.makeMCComponentFromEOS('T2ttDeg_mStop350_mChi330_4bodydec_lepOnly', '/T2ttDeg_mStop350_mChi330_4bodydec_lepOnly/', '/store/cmst3/group/susy/gpetrucc/13TeV/RunIISpring15DR74/%s',".*root", 3.787*(0.332)*(0.332))
-T2ttDeg_mStop425_mChi405_4bodydec = kreator.makeMCComponentFromEOS('T2ttDeg_mStop425_mChi405_4bodydec', '/T2ttDeg_mStop425_mChi405_4bodydec_for76X/', '/store/cmst3/group/susy/gpetrucc/13TeV/RunIISpring16MiniAODv2/%s',".*root", 1.3117)
-T2ttDeg = [ T2ttDeg_mStop350_mChi330_4bodydec, T2ttDeg_mStop425_mChi405_4bodydec ]
-
+#T2ttDeg_mStop425_mChi405_4bodydec = kreator.makeMCComponentFromEOS('T2ttDeg_mStop425_mChi405_4bodydec', '/T2ttDeg_mStop425_mChi405_4bodydec_for76X/', '/store/cmst3/group/susy/gpetrucc/13TeV/RunIISpring16MiniAODv2/%s',".*root", 1.3117)
+#T2ttDeg = [ T2ttDeg_mStop350_mChi330_4bodydec, T2ttDeg_mStop425_mChi405_4bodydec ]
+T2ttDeg = []
 
 ## T2cc
 ## ------------------------------------------------------
-T2cc_mStop300_mChi290 = kreator.makeMCComponentFromEOS('T2cc_mStop300_mChi290', '/T2cc_mStop300_mChi290_for76X/', '/store/cmst3/group/susy/gpetrucc/13TeV/RunIISpring16MiniAODv2/%s',".*root", 8.51615)
-T2cc_mStop300_mChi295 = kreator.makeMCComponentFromEOS('T2cc_mStop300_mChi295', '/T2cc_mStop300_mChi295_for76X/', '/store/cmst3/group/susy/gpetrucc/13TeV/RunIISpring16MiniAODv2/%s',".*root", 8.51615)
-T2cc_mStop350_mChi340 = kreator.makeMCComponentFromEOS('T2cc_mStop350_mChi340', '/T2cc_mStop350_mChi340_for76X/', '/store/cmst3/group/susy/gpetrucc/13TeV/RunIISpring16MiniAODv2/%s',".*root", 3.78661)
-T2cc_mStop350_mChi345 = kreator.makeMCComponentFromEOS('T2cc_mStop350_mChi345', '/T2cc_mStop350_mChi345_for76X/', '/store/cmst3/group/susy/gpetrucc/13TeV/RunIISpring16MiniAODv2/%s',".*root", 3.78661)
-T2cc = [ T2cc_mStop300_mChi290, T2cc_mStop300_mChi295, T2cc_mStop350_mChi340, T2cc_mStop350_mChi345] 
+#T2cc_mStop300_mChi290 = kreator.makeMCComponentFromEOS('T2cc_mStop300_mChi290', '/T2cc_mStop300_mChi290_for76X/', '/store/cmst3/group/susy/gpetrucc/13TeV/RunIISpring16MiniAODv2/%s',".*root", 8.51615)
+#T2cc_mStop300_mChi295 = kreator.makeMCComponentFromEOS('T2cc_mStop300_mChi295', '/T2cc_mStop300_mChi295_for76X/', '/store/cmst3/group/susy/gpetrucc/13TeV/RunIISpring16MiniAODv2/%s',".*root", 8.51615)
+#T2cc_mStop350_mChi340 = kreator.makeMCComponentFromEOS('T2cc_mStop350_mChi340', '/T2cc_mStop350_mChi340_for76X/', '/store/cmst3/group/susy/gpetrucc/13TeV/RunIISpring16MiniAODv2/%s',".*root", 3.78661)
+#T2cc_mStop350_mChi345 = kreator.makeMCComponentFromEOS('T2cc_mStop350_mChi345', '/T2cc_mStop350_mChi345_for76X/', '/store/cmst3/group/susy/gpetrucc/13TeV/RunIISpring16MiniAODv2/%s',".*root", 3.78661)
+#T2cc = [ T2cc_mStop300_mChi290, T2cc_mStop300_mChi295, T2cc_mStop350_mChi340, T2cc_mStop350_mChi345] 
+T2cc = []
 
 
 ## T5qqqqWW
