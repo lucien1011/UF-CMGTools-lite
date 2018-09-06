@@ -30,7 +30,7 @@ isTest                          = True
 selectedEvents                  = ""
 keepLHEWeights                  = False
 fast                            = True
-test                            = '1'
+test                            = getHeppyOption('test')
 #json                            = os.environ['CMSSW_BASE']+'/src/CMGTools/TTHAnalysis/data/json/Cert_271036-284044_13TeV_PromptReco_Collisions16_JSON_NoL1T.txt' # 36.15/fb
 json                            = os.environ['CMSSW_BASE']+ '/src/CMGTools/TTHAnalysis/data/json/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt' # 36.46 /fb
 
@@ -91,7 +91,7 @@ jetAna.cleanSelectedLeptons = True
 jetAna.storeLowPtJets       = True
 jetAna.jetEtaCentral        = jetAna.jetEta
 jetAna.mcGT                 = "Spring16_25nsV8_MC"    
-jetAna.dataGT               = "Spring16_25nsV8BCD_DATA Spring16_25nsV8E_DATA Spring16_25nsV8F_DATA Spring16_25nsV8_DATA"
+jetAna.dataGT               = [(1,"Summer16_23Sep2016BCDV3_DATA"),(276831,"Summer16_23Sep2016EFV3_DATA"),(278802,"Summer16_23Sep2016GV3_DATA"),(280919,"Summer16_23Sep2016HV3_DATA")]
 jetAna.runsDataJEC          = [276811, 277420, 278802]
 jetAna.doQG                 = False
 jetAnaScaleUp.doQG          = False
@@ -116,10 +116,10 @@ if not removeJecUncertainty:
     jetAnaScaleUp.storeLowPtJets=True
     jetAnaScaleUp.jetEtaCentral = jetAnaScaleUp.jetEta
     jetAnaScaleDown.mcGT="Spring16_25nsV8_MC"    
-    jetAnaScaleDown.dataGT   = "Spring16_25nsV8BCD_DATA Spring16_25nsV8E_DATA Spring16_25nsV8F_DATA Spring16_25nsV8_DATA"
+    jetAnaScaleDown.dataGT   = [(1,"Summer16_23Sep2016BCDV3_DATA"),(276831,"Summer16_23Sep2016EFV3_DATA"),(278802,"Summer16_23Sep2016GV3_DATA"),(280919,"Summer16_23Sep2016HV3_DATA")]
     jetAnaScaleDown.runsDataJEC   = [276811, 277420, 278802]
     jetAnaScaleUp.mcGT="Spring16_25nsV8_MC"    
-    jetAnaScaleUp.dataGT   = "Spring16_25nsV8BCD_DATA Spring16_25nsV8E_DATA Spring16_25nsV8F_DATA Spring16_25nsV8_DATA"
+    jetAnaScaleUp.dataGT   = [(1,"Summer16_23Sep2016BCDV3_DATA"),(276831,"Summer16_23Sep2016EFV3_DATA"),(278802,"Summer16_23Sep2016GV3_DATA"),(280919,"Summer16_23Sep2016HV3_DATA")]
     jetAnaScaleUp.runsDataJEC   = [276811, 277420, 278802]
 
 # ____________________________________________________________________________________________________ ||
@@ -328,7 +328,8 @@ triggerFlagsAna.checkL1Prescale = True
 #from CMGTools.RootTools.samples.samples_13TeV_RunIISummer16MiniAODv2 import *
 #from CMGTools.RootTools.samples.samples_13TeV_signals import *
 #from CMGTools.RootTools.samples.samples_13TeV_80X_susySignalsPriv import *
-from CMGTools.RootTools.samples.samples_13TeV_DATA2016 import *
+#from CMGTools.RootTools.samples.samples_13TeV_DATA2016 import *
+from CMGTools.RA5.Dataset.Data_Run2016 import *
 from CMGTools.HToZZ4L.tools.configTools import printSummary, configureSplittingFromTime, cropToLumi, prescaleComponents, insertEventSelector
 
 samples = []
@@ -345,7 +346,6 @@ DatasetsAndTriggers.append( ("SingleMuon", triggers_leptau + triggers_1mu_iso + 
 DatasetsAndTriggers.append( ("SingleElectron", triggers_leptau + triggers_1e) )
 DatasetsAndTriggers.append( ("Tau", triggers_leptau + triggers_1mu_iso + triggers_1e) )
 
-#processing = "Run2016B-23Sep2016-v1"; short = "Run2016B_23Sep2016_v1"; run_ranges = [(272760,273017)]; useAAA=True; # -v2 starts from 272760 to 273017
 #dataChunks.append((json,processing,short,run_ranges,useAAA))
 processing = "Run2016B-23Sep2016-v3"; short = "Run2016B_23Sep2016_v3"; run_ranges = [(273150,275376)]; useAAA=True; # -v3 starts from 273150 to 275376
 dataChunks.append((json,processing,short,run_ranges,useAAA))

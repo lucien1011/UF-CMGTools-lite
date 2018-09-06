@@ -30,7 +30,7 @@ isTest                          = True
 selectedEvents                  = ""
 keepLHEWeights                  = False
 fast                            = True
-test                            = '1'
+test                            = getHeppyOption('test')
 
 isolation = "miniIso"
 sample = "main"
