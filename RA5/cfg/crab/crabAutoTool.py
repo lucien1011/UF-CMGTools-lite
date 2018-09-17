@@ -48,9 +48,11 @@ def checkStatusTask(task):
               "fail":0,
               "total":0,
               }
+
+    print log
     
     for line in log.splitlines(): #("\n"):
-        
+
         if "Task name" in line:
             taskName=(line.split(":")[2])
             ext=taskName.split("_")[-1]
@@ -59,8 +61,12 @@ def checkStatusTask(task):
         if "timed out" in line: #error of communication, bypass
             return taskName, ext, jobInfos
 
-        if len(line.split("("))>1 and "/" in line:
-            tmp=line.split("(")[1][:-1]
+        if len(line.split("("))>1 and "/" in line and "Jobs status" in line:
+            if "Warning" in line:
+                newLine = line.split("Warning")[0]
+            else:
+                newLine = line
+            tmp=newLine.split("(")[1][:-1]
             nJobs=int(tmp.split("/")[0])
             jobInfos["total"] = int(tmp.split("/")[1])
         
@@ -97,6 +103,7 @@ def prepareReport(tasks):
     errorState=-1
     summary={}
     for task in tasks:
+        print task
         name, ext, jobInfos=checkStatusTask(task)
         #print name, ext, jobInfos
         isData=False
