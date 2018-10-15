@@ -30,7 +30,11 @@ isTest                          = True
 selectedEvents                  = ""
 keepLHEWeights                  = False
 fast                            = True
-test                            = '5'
+test                            = getHeppyOption('test')
+#json                            = os.environ['CMSSW_BASE']+'/src/CMGTools/TTHAnalysis/data/json/Cert_271036-284044_13TeV_PromptReco_Collisions16_JSON_NoL1T.txt' # 36.15/fb
+json                            = os.environ['CMSSW_BASE']+ '/src/CMGTools/TTHAnalysis/data/json/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt' # 36.46 /fb
+
+
 
 isolation = "miniIso"
 sample = "main"
@@ -87,7 +91,7 @@ jetAna.cleanSelectedLeptons = True
 jetAna.storeLowPtJets       = True
 jetAna.jetEtaCentral        = jetAna.jetEta
 jetAna.mcGT                 = "Spring16_25nsV8_MC"    
-jetAna.dataGT               = "Spring16_25nsV8BCD_DATA Spring16_25nsV8E_DATA Spring16_25nsV8F_DATA Spring16_25nsV8_DATA"
+jetAna.dataGT               = [(1,"Summer16_23Sep2016BCDV3_DATA"),(276831,"Summer16_23Sep2016EFV3_DATA"),(278802,"Summer16_23Sep2016GV3_DATA"),(280919,"Summer16_23Sep2016HV3_DATA")]
 jetAna.runsDataJEC          = [276811, 277420, 278802]
 jetAna.doQG                 = False
 jetAnaScaleUp.doQG          = False
@@ -112,10 +116,10 @@ if not removeJecUncertainty:
     jetAnaScaleUp.storeLowPtJets=True
     jetAnaScaleUp.jetEtaCentral = jetAnaScaleUp.jetEta
     jetAnaScaleDown.mcGT="Spring16_25nsV8_MC"    
-    jetAnaScaleDown.dataGT   = "Spring16_25nsV8BCD_DATA Spring16_25nsV8E_DATA Spring16_25nsV8F_DATA Spring16_25nsV8_DATA"
+    jetAnaScaleDown.dataGT   = [(1,"Summer16_23Sep2016BCDV3_DATA"),(276831,"Summer16_23Sep2016EFV3_DATA"),(278802,"Summer16_23Sep2016GV3_DATA"),(280919,"Summer16_23Sep2016HV3_DATA")]
     jetAnaScaleDown.runsDataJEC   = [276811, 277420, 278802]
     jetAnaScaleUp.mcGT="Spring16_25nsV8_MC"    
-    jetAnaScaleUp.dataGT   = "Spring16_25nsV8BCD_DATA Spring16_25nsV8E_DATA Spring16_25nsV8F_DATA Spring16_25nsV8_DATA"
+    jetAnaScaleUp.dataGT   = [(1,"Summer16_23Sep2016BCDV3_DATA"),(276831,"Summer16_23Sep2016EFV3_DATA"),(278802,"Summer16_23Sep2016GV3_DATA"),(280919,"Summer16_23Sep2016HV3_DATA")]
     jetAnaScaleUp.runsDataJEC   = [276811, 277420, 278802]
 
 # ____________________________________________________________________________________________________ ||
@@ -313,23 +317,97 @@ triggerFlagsAna.triggerBits = {
     'HT' : triggers_pfht,
     'MonoJet80MET90' : triggers_Jet80MET90,
     'MonoJet80MET120' : triggers_Jet80MET120,
+    'SingleJet': triggers_jet,
     #'METMu5' : triggers_MET120Mu5,
-    }
+}
 triggerFlagsAna.unrollbits = True
 triggerFlagsAna.saveIsUnprescaled = True
 triggerFlagsAna.checkL1Prescale = True
 
-from CMGTools.RA5.Dataset.SMS_T1qqqqL_Run2016 import *
+#from CMGTools.RootTools.samples.samples_13TeV_RunIISpring16MiniAODv1 import *
+#from CMGTools.RootTools.samples.samples_13TeV_RunIISpring16MiniAODv2 import *
+#from CMGTools.RootTools.samples.samples_13TeV_RunIISummer16MiniAODv2 import *
+#from CMGTools.RootTools.samples.samples_13TeV_signals import *
+#from CMGTools.RootTools.samples.samples_13TeV_80X_susySignalsPriv import *
+#from CMGTools.RootTools.samples.samples_13TeV_DATA2016 import *
+from CMGTools.RA5.Dataset.Data_Run2016 import *
 from CMGTools.HToZZ4L.tools.configTools import printSummary, configureSplittingFromTime, cropToLumi, prescaleComponents, insertEventSelector
 
-samples = [
-            T1qqqqL_1000,
-            ]
-   
-if not keepLHEWeights:
-    selectedComponents = samples #samples_2l +samples_1l
-else:
-    selectedComponents = samples_LHE
+samples = []
+selectedComponents = samples #samples_2l +samples_1l
+dataChunks = []
+
+exclusiveDatasets = True
+compSelection = ""; compVeto = ""
+DatasetsAndTriggers = []
+DatasetsAndTriggers.append( ("DoubleMuon", triggers_mumu_iso + triggers_mumu_ss + triggers_mu30tkmu11 + triggers_mumu_ht + triggers_3mu + triggers_3mu_alt + triggers_mu27tkmu8 + triggers_jet) )
+DatasetsAndTriggers.append( ("DoubleEG",   triggers_ee + triggers_doubleele33 + triggers_doubleele33_MW + triggers_ee_ht + triggers_3e + triggers_jet) )
+DatasetsAndTriggers.append( ("MuonEG",     triggers_mue + triggers_mue_ht + triggers_2mu1e + triggers_2e1mu + triggers_mu30ele30 + triggers_jet) )
+#DatasetsAndTriggers.append( ("SingleMuon", triggers_leptau + triggers_1mu_iso + triggers_1mu_noniso + triggers_jet) )
+#DatasetsAndTriggers.append( ("SingleElectron", triggers_leptau + triggers_1e + triggers_jet) )
+#DatasetsAndTriggers.append( ("Tau", triggers_leptau + triggers_1mu_iso + triggers_1e + triggers_jet) )
+
+#dataChunks.append((json,processing,short,run_ranges,useAAA))
+#processing = "Run2016B-23Sep2016-v3"; short = "Run2016B_23Sep2016_v3"; run_ranges = [(273150,275376)]; useAAA=True; # -v3 starts from 273150 to 275376
+#dataChunks.append((json,processing,short,run_ranges,useAAA))
+#processing = "Run2016C-23Sep2016-v1"; short = "Run2016C_23Sep2016_v1"; run_ranges = [(271036,284044)]; useAAA=True;
+#dataChunks.append((json,processing,short,run_ranges,useAAA))
+#processing = "Run2016D-23Sep2016-v1"; short = "Run2016D_23Sep2016_v1"; run_ranges = [(271036,284044)]; useAAA=True;
+#dataChunks.append((json,processing,short,run_ranges,useAAA))
+#processing = "Run2016E-23Sep2016-v1"; short = "Run2016E_23Sep2016_v1"; run_ranges = [(271036,284044)]; useAAA=True;
+#dataChunks.append((json,processing,short,run_ranges,useAAA))
+#processing = "Run2016F-23Sep2016-v1"; short = "Run2016F_23Sep2016_v1"; run_ranges = [(271036,284044)]; useAAA=True;
+#dataChunks.append((json,processing,short,run_ranges,useAAA))
+#processing = "Run2016G-23Sep2016-v1"; short = "Run2016G_23Sep2016_v1"; run_ranges = [(271036,284044)]; useAAA=True;
+#dataChunks.append((json,processing,short,run_ranges,useAAA))
+##run H ==============================================================================================================
+#processing = "Run2016H-PromptReco-v1"; short = "Run2016H-PromptReco-v1"; run_ranges = [(281085,281201)]; useAAA=True;
+#dataChunks.append((json,processing,short,run_ranges,useAAA))
+processing = "Run2016H-PromptReco-v2"; short = "Run2016H-PromptReco-v2"; run_ranges = [(281207,284035)]; useAAA=True;
+dataChunks.append((json,processing,short,run_ranges,useAAA))
+processing = "Run2016H-PromptReco-v3"; short = "Run2016H-PromptReco-v3"; run_ranges = [(284036,284044)]; useAAA=True;
+dataChunks.append((json,processing,short,run_ranges,useAAA))
+for json,processing,short,run_ranges,useAAA in dataChunks:
+    if len(run_ranges)==0: run_ranges=[None]
+    vetos = []
+    for pd,triggers in DatasetsAndTriggers:
+        for run_range in run_ranges:
+            label = ""
+            if run_range!=None:
+                label = "_runs_%d_%d" % run_range if run_range[0] != run_range[1] else "run_%d" % (run_range[0],)
+            compname = pd+"_"+short+label
+            if ((compSelection and not re.search(compSelection, compname)) or
+                (compVeto      and     re.search(compVeto,      compname))):
+                    print "Will skip %s" % (compname)
+                    continue
+            myprocessing = processing
+            comp = kreator.makeDataComponent(compname, 
+                                             "/"+pd+"/"+myprocessing+"/MINIAOD", 
+                                             "CMS", ".*root", 
+                                             json=json, 
+                                             run_range=(run_range if "PromptReco" not in myprocessing else None), 
+                                             triggers=triggers[:], vetoTriggers = vetos[:],
+                                             useAAA=useAAA)
+            if "PromptReco" in myprocessing:
+                from CMGTools.Production.promptRecoRunRangeFilter import filterComponent
+                filterComponent(comp, verbose=1)
+            print "Will process %s (%d files)" % (comp.name, len(comp.files))
+            comp.splitFactor = len(comp.files)/8
+            comp.fineSplitFactor = 1
+            selectedComponents.append( comp )
+        if exclusiveDatasets: vetos += triggers
+if json is None:
+    susyCoreSequence.remove(jsonAna)
+
+from CMGTools.Production.promptRecoRunRangeFilter import filterComponent
+for c in selectedComponents:
+    printnewsummary = False
+    c.splitFactor = len(c.files)/3
+    if "PromptReco" in c.name:
+        printnewsummary = True
+        filterComponent(c, 1)
+        c.splitFactor = len(c.files)/3
+if printnewsummary: printSummary(selectedComponents)
 
 if removeJetReCalibration:
     jetAna.recalibrateJets = False
@@ -389,9 +467,13 @@ elif test == '5':
     for comp in selectedComponents:
         comp.files = comp.files[:5]
         comp.splitFactor = 1
-        comp.fineSplitFactor = 1
+        comp.fineSplitFactor = 5
 elif test == "ra5-sync-mc":
-    comp = cfg.MCComponent( files = ["root://eoscms.cern.ch//store/mc/RunIISpring16MiniAODv1/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/MINIAODSIM/PUSpring16_80X_mcRun2_asymptotic_2016_v3-v1/00000/6E02CA07-BA02-E611-A59E-14187741208F.root"], name="TTW_RA5_sync" )
+    #comp = cfg.MCComponent( files = ["root://eoscms.cern.ch//store/mc/RunIISpring16MiniAODv1/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/MINIAODSIM/PUSpring16_80X_mcRun2_asymptotic_2016_v3-v1/00000/6E02CA07-BA02-E611-A59E-14187741208F.root"], name="TTW_RA5_sync" )
+    comp = cfg.MCComponent( files = [
+            #"root://eoscms.cern.ch//store/mc/RunIISpring16MiniAODv1/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/MINIAODSIM/PUSpring16_80X_mcRun2_asymptotic_2016_v3-v1/00000/6E02CA07-BA02-E611-A59E-14187741208F.root"
+            "root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv1/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/MINIAODSIM/PUSpring16_80X_mcRun2_asymptotic_2016_v3-v1/00000/6E02CA07-BA02-E611-A59E-14187741208F.root"
+            ], name="TTW_RA5_sync" )
     comp.triggers = []
     comp.splitFactor = 1
     comp.fineSplitFactor = 1

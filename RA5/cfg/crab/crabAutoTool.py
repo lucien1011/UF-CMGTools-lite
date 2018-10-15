@@ -1,4 +1,4 @@
-import os, sys, smtplib, subprocess, time
+import os, sys, smtplib, subprocess, time, argparse
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 
@@ -94,7 +94,7 @@ def crabResubmit(task):
 
 
 
-def prepareReport(tasks):
+def prepareReport(tasks,dry_run=False):
 
     dataSetsNames=["DoubleEG","DoubleMuon","SingleElectron","SingleMuon","MuonEG","MET","JetHT"]
     types=["wait","run","transfert","fail","done","total"]
@@ -136,14 +136,16 @@ def prepareReport(tasks):
                     errorState=1
                     messages[name]="WARNING : pp data dataset "+name+" ("+ext+") shows failed jobs ("+str(jobInfos["fail"])+"/"+str(jobInfos["total"])+") -> automatic resubmission\n"
                     cnts[name+"_"+ext][0]+=1
-                    crabResubmit(task)
+                    if not dry_run:
+                        crabResubmit(task)
                 else:
                     errorState=2
                     messages[name]="ERROR : pp data dataset "+name+" ("+ext+") shows failed jobs ("+str(jobInfos["fail"])+"/"+str(jobInfos["total"])+") after 10 resubmission!! Manual action needed\n"
 
             elif jobInfos["fail"]/jobInfos["total"]>0.05:
                 if cnts[name+"_"+ext][0]<24:
-                    crabResubmit(task)
+                    if not dry_run:
+                        crabResubmit(task)
                     cnts[name+"_"+ext][0]+=1
                     if jobInfos["fail"]/jobInfos["total"]>0.20:
                         messages[name]="WARNING : MC dataset "+name+" ("+ext+") shows large fraction of failed jobs ("+str(jobInfos["fail"])+"/"+str(jobInfos["total"])+") -> automatic resubmission\n"
@@ -172,7 +174,7 @@ def prepareReport(tasks):
 
 
 
-def crabAutoTool(reset=False, regTasks="crab_*/*"):
+def crabAutoTool(reset=False, regTasks="crab_*/*",dry_run=False):
    
     #ending cron job if credientials are timed-out / validated
     p = subprocess.Popen(['voms-proxy-info'],
@@ -199,7 +201,7 @@ def crabAutoTool(reset=False, regTasks="crab_*/*"):
             cnts[ line.split()[0] ][1] = line.split()[2]
             #print "initialization ==>> ",  line.split()[0]
 
-    report = prepareReport(tasks)
+    report = prepareReport(tasks,dry_run=dry_run)
     sendMailTo(report)
     #print report
 
@@ -215,9 +217,11 @@ def crabAutoTool(reset=False, regTasks="crab_*/*"):
     if nDone==0:
         os.system("acrontab -r")
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--reset',action='store_true',)
+parser.add_argument('--regTasks',action='store',default="crab_*/*")
+parser.add_argument('--dry_run',action='store_true',)
 
-if len(sys.argv) > 1:
-    crabAutoTool(sys.argv[1],sys.argv[2])
-else:
-    crabAutoTool()
+option = parser.parse_args()
 
+crabAutoTool(reset=option.reset,regTasks=option.regTasks,dry_run=option.dry_run)

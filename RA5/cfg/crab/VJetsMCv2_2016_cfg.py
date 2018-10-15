@@ -30,7 +30,7 @@ isTest                          = True
 selectedEvents                  = ""
 keepLHEWeights                  = False
 fast                            = True
-test                            = '5'
+test                            = getHeppyOption('test')
 
 isolation = "miniIso"
 sample = "main"
@@ -314,18 +314,37 @@ triggerFlagsAna.triggerBits = {
     'MonoJet80MET90' : triggers_Jet80MET90,
     'MonoJet80MET120' : triggers_Jet80MET120,
     #'METMu5' : triggers_MET120Mu5,
-    }
+}
 triggerFlagsAna.unrollbits = True
 triggerFlagsAna.saveIsUnprescaled = True
 triggerFlagsAna.checkL1Prescale = True
 
-from CMGTools.RA5.Dataset.SMS_T1qqqqL_Run2016 import *
+#from CMGTools.RootTools.samples.samples_13TeV_RunIISpring16MiniAODv1 import *
+#from CMGTools.RootTools.samples.samples_13TeV_RunIISpring16MiniAODv2 import *
+from CMGTools.RootTools.samples.samples_13TeV_RunIISummer16MiniAODv2 import *
+#from CMGTools.RootTools.samples.samples_13TeV_signals import *
+#from CMGTools.RootTools.samples.samples_13TeV_80X_susySignalsPriv import *
+#from CMGTools.RootTools.samples.samples_13TeV_DATA2016 import *
 from CMGTools.HToZZ4L.tools.configTools import printSummary, configureSplittingFromTime, cropToLumi, prescaleComponents, insertEventSelector
 
+#samples = DYJetsM5to50HT + DYJetsM50HT + WJetsToLNuHT
 samples = [
-            T1qqqqL_1000,
-            ]
-   
+    WJetsToLNu_HT100to200_ext2,
+    WJetsToLNu_HT200to400,
+    WJetsToLNu_HT200to400_ext,
+    WJetsToLNu_HT200to400_ext2,
+    WJetsToLNu_HT400to600,
+    WJetsToLNu_HT400to600_ext,
+    WJetsToLNu_HT600to800,
+    WJetsToLNu_HT600to800_ext,
+    WJetsToLNu_HT800to1200,
+    WJetsToLNu_HT800to1200_ext,
+    WJetsToLNu_HT1200to2500,
+    WJetsToLNu_HT1200to2500_ext,
+    WJetsToLNu_HT2500toInf,
+    WJetsToLNu_HT2500toInf_ext,
+]
+
 if not keepLHEWeights:
     selectedComponents = samples #samples_2l +samples_1l
 else:
@@ -389,9 +408,12 @@ elif test == '5':
     for comp in selectedComponents:
         comp.files = comp.files[:5]
         comp.splitFactor = 1
-        comp.fineSplitFactor = 1
+        comp.fineSplitFactor = 5
 elif test == "ra5-sync-mc":
-    comp = cfg.MCComponent( files = ["root://eoscms.cern.ch//store/mc/RunIISpring16MiniAODv1/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/MINIAODSIM/PUSpring16_80X_mcRun2_asymptotic_2016_v3-v1/00000/6E02CA07-BA02-E611-A59E-14187741208F.root"], name="TTW_RA5_sync" )
+    comp = cfg.MCComponent( files = [
+            #"root://eoscms.cern.ch//store/mc/RunIISpring16MiniAODv1/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/MINIAODSIM/PUSpring16_80X_mcRun2_asymptotic_2016_v3-v1/00000/6E02CA07-BA02-E611-A59E-14187741208F.root"
+            "root://cms-xrd-global.cern.ch//store/mc/RunIISpring16MiniAODv1/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/MINIAODSIM/PUSpring16_80X_mcRun2_asymptotic_2016_v3-v1/00000/6E02CA07-BA02-E611-A59E-14187741208F.root"
+            ], name="TTW_RA5_sync" )
     comp.triggers = []
     comp.splitFactor = 1
     comp.fineSplitFactor = 1
@@ -436,7 +458,7 @@ if not keepLHEWeights:
 
 ## Auto-AAA
 from CMGTools.RootTools.samples.autoAAAconfig import *
-if not getHeppyOption("isCrab"):
+if test!="ra5-sync-mc":
     autoAAA(selectedComponents)
 
 ## output histogram

@@ -347,25 +347,25 @@ DatasetsAndTriggers.append( ("SingleElectron", triggers_leptau + triggers_1e) )
 DatasetsAndTriggers.append( ("Tau", triggers_leptau + triggers_1mu_iso + triggers_1e) )
 
 #dataChunks.append((json,processing,short,run_ranges,useAAA))
-processing = "Run2016B-23Sep2016-v3"; short = "Run2016B_23Sep2016_v3"; run_ranges = [(273150,275376)]; useAAA=True; # -v3 starts from 273150 to 275376
+#processing = "Run2016B-23Sep2016-v3"; short = "Run2016B_23Sep2016_v3"; run_ranges = [(273150,275376)]; useAAA=True; # -v3 starts from 273150 to 275376
+#dataChunks.append((json,processing,short,run_ranges,useAAA))
+processing = "Run2016C-23Sep2016-v1"; short = "Run2016C_23Sep2016_v1"; run_ranges = [(271036,284044)]; useAAA=True;
 dataChunks.append((json,processing,short,run_ranges,useAAA))
-#processing = "Run2016C-23Sep2016-v1"; short = "Run2016C_23Sep2016_v1"; run_ranges = [(271036,284044)]; useAAA=True;
-#dataChunks.append((json,processing,short,run_ranges,useAAA))
-#processing = "Run2016D-23Sep2016-v1"; short = "Run2016D_23Sep2016_v1"; run_ranges = [(271036,284044)]; useAAA=True;
-#dataChunks.append((json,processing,short,run_ranges,useAAA))
-#processing = "Run2016E-23Sep2016-v1"; short = "Run2016E_23Sep2016_v1"; run_ranges = [(271036,284044)]; useAAA=True;
-#dataChunks.append((json,processing,short,run_ranges,useAAA))
-#processing = "Run2016F-23Sep2016-v1"; short = "Run2016F_23Sep2016_v1"; run_ranges = [(271036,284044)]; useAAA=True;
-#dataChunks.append((json,processing,short,run_ranges,useAAA))
-#processing = "Run2016G-23Sep2016-v1"; short = "Run2016G_23Sep2016_v1"; run_ranges = [(271036,284044)]; useAAA=True;
-#dataChunks.append((json,processing,short,run_ranges,useAAA))
+processing = "Run2016D-23Sep2016-v1"; short = "Run2016D_23Sep2016_v1"; run_ranges = [(271036,284044)]; useAAA=True;
+dataChunks.append((json,processing,short,run_ranges,useAAA))
+processing = "Run2016E-23Sep2016-v1"; short = "Run2016E_23Sep2016_v1"; run_ranges = [(271036,284044)]; useAAA=True;
+dataChunks.append((json,processing,short,run_ranges,useAAA))
+processing = "Run2016F-23Sep2016-v1"; short = "Run2016F_23Sep2016_v1"; run_ranges = [(271036,284044)]; useAAA=True;
+dataChunks.append((json,processing,short,run_ranges,useAAA))
+processing = "Run2016G-23Sep2016-v1"; short = "Run2016G_23Sep2016_v1"; run_ranges = [(271036,284044)]; useAAA=True;
+dataChunks.append((json,processing,short,run_ranges,useAAA))
 ##run H ==============================================================================================================
-#processing = "Run2016H-PromptReco-v1"; short = "Run2016H-PromptReco-v1"; run_ranges = [(281085,281201)]; useAAA=True;
-#dataChunks.append((json,processing,short,run_ranges,useAAA))
-#processing = "Run2016H-PromptReco-v2"; short = "Run2016H-PromptReco-v2"; run_ranges = [(281207,284035)]; useAAA=True;
-#dataChunks.append((json,processing,short,run_ranges,useAAA))
-#processing = "Run2016H-PromptReco-v3"; short = "Run2016H-PromptReco-v3"; run_ranges = [(284036,284044)]; useAAA=True;
-#dataChunks.append((json,processing,short,run_ranges,useAAA))
+processing = "Run2016H-PromptReco-v1"; short = "Run2016H-PromptReco-v1"; run_ranges = [(281085,281201)]; useAAA=True;
+dataChunks.append((json,processing,short,run_ranges,useAAA))
+processing = "Run2016H-PromptReco-v2"; short = "Run2016H-PromptReco-v2"; run_ranges = [(281207,284035)]; useAAA=True;
+dataChunks.append((json,processing,short,run_ranges,useAAA))
+processing = "Run2016H-PromptReco-v3"; short = "Run2016H-PromptReco-v3"; run_ranges = [(284036,284044)]; useAAA=True;
+dataChunks.append((json,processing,short,run_ranges,useAAA))
 for json,processing,short,run_ranges,useAAA in dataChunks:
     if len(run_ranges)==0: run_ranges=[None]
     vetos = []

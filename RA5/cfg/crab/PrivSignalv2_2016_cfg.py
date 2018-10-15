@@ -320,10 +320,24 @@ triggerFlagsAna.saveIsUnprescaled = True
 triggerFlagsAna.checkL1Prescale = True
 
 from CMGTools.RA5.Dataset.SMS_T1qqqqL_Run2016 import *
+from CMGTools.RA5.Dataset.SMS_T1tbs_Run2016 import *
 from CMGTools.HToZZ4L.tools.configTools import printSummary, configureSplittingFromTime, cropToLumi, prescaleComponents, insertEventSelector
 
 samples = [
-            T1qqqqL_1000,
+            #T1qqqqL_1000,
+            #T1qqqqL_1500,
+            #T1tbs_1000,
+            #T1tbs_1500,
+            #T1qqqqL_1600,
+            #T1qqqqL_1700,
+            #T1qqqqL_1800,
+            #T1qqqqL_1900,
+            #T1qqqqL_2000,
+            T1qqqqL_2100,
+            T1qqqqL_2200,
+            T1qqqqL_2300,
+            T1qqqqL_2400,
+            T1qqqqL_2500,
             ]
    
 if not keepLHEWeights:

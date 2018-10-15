@@ -26,6 +26,10 @@
 
 #./heppy_crab.py -c BkgMCv2_2016_cfg.py -s T2_US_Florida -d HeppyTree -l Sept18_v1 -v heppy_80X_RA5_Legacy -u treeProducerSusyRA5/tree.root,skimAnalyzerCount/SkimReport.txt 
 
+#./heppy_crab.py -c VJetsMCv2_2016_cfg.py -s T2_US_Florida -d HeppyTree -l Sept18_v1 -v heppy_80X_RA5_Legacy -u treeProducerSusyRA5/tree.root,skimAnalyzerCount/SkimReport.txt 
+
 #./heppy_crab.py -c Datav2_2016_cfg.py -s T2_US_Florida -d HeppyTree -l Sept18_v1 -v heppy_80X_RA5_Legacy -u treeProducerSusyRA5/tree.root,skimAnalyzerCount/SkimReport.txt
 
-./heppy_crab.py -c QCDv2_2016_cfg.py -s T2_US_Florida -d HeppyTree -l Sept18_v1 -v heppy_80X_RA5_Legacy -u treeProducerSusyRA5/tree.root,skimAnalyzerCount/SkimReport.txt 
+#./heppy_crab.py -c QCDv2_2016_cfg.py -s T2_US_Florida -d HeppyTree -l Sept18_v1 -v heppy_80X_RA5_Legacy -u treeProducerSusyRA5/tree.root,skimAnalyzerCount/SkimReport.txt 
+
+./heppy_crab.py -c PrivSignalv2_2016_cfg.py -s T2_US_Florida -d HeppyTree -l Sept18_v1 -v heppy_80X_RA5_Legacy -u treeProducerSusyRA5/tree.root,skimAnalyzerCount/SkimReport.txt 

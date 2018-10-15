@@ -30,7 +30,7 @@ isTest                          = True
 selectedEvents                  = ""
 keepLHEWeights                  = False
 fast                            = True
-test                            = '5'
+test                            = None
 
 isolation = "miniIso"
 sample = "main"
@@ -314,16 +314,58 @@ triggerFlagsAna.triggerBits = {
     'MonoJet80MET90' : triggers_Jet80MET90,
     'MonoJet80MET120' : triggers_Jet80MET120,
     #'METMu5' : triggers_MET120Mu5,
-    }
+}
 triggerFlagsAna.unrollbits = True
 triggerFlagsAna.saveIsUnprescaled = True
 triggerFlagsAna.checkL1Prescale = True
 
-from CMGTools.RA5.Dataset.SMS_T1qqqqL_Run2016 import *
+#from CMGTools.RootTools.samples.samples_13TeV_RunIISpring16MiniAODv1 import *
+#from CMGTools.RootTools.samples.samples_13TeV_RunIISpring16MiniAODv2 import *
+from CMGTools.RootTools.samples.samples_13TeV_RunIISummer16MiniAODv2 import *
+#from CMGTools.RootTools.samples.samples_13TeV_signals import *
+#from CMGTools.RootTools.samples.samples_13TeV_80X_susySignalsPriv import *
+#from CMGTools.RootTools.samples.samples_13TeV_DATA2016 import *
 from CMGTools.HToZZ4L.tools.configTools import printSummary, configureSplittingFromTime, cropToLumi, prescaleComponents, insertEventSelector
 
 samples = [
-            T1qqqqL_1000,
+            #TTJets, TTJets_DiLepton, TTJets_SingleLeptonFromT, TTJets_SingleLeptonFromTbar, 
+            #TT_pow, TT_pow_ext3, 
+            ## DYJetsToLL_M50, 
+            #DYJetsToLL_M50_LO_ext, DYJetsToLL_M50_LO_ext2, 
+            ## DYJetsToLL_M10to50, DYJetsToLL_M10to50_ext, 
+            #DYJetsToLL_M10to50_LO, 
+            GGHZZ4L, 
+            #TBarToLeptons_tch_powheg, TBar_tWch, 
+            #TToLeptons_sch_amcatnlo, TToLeptons_tch_amcatnlo, TToLeptons_tch_powheg, T_tWch, 
+            tWll,
+            #TGJets, TTGJets, 
+            TTTT, 
+            #VHToNonbb, WGToLNuG, 
+            WJetsToLNu, 
+            #WJetsToLNu_LO, 
+            #WJetsToLNu_LO_ext,
+            #WWDoubleTo2L, 
+            WWTo2L2Nu, WWW, WWZ, WZZ, WpWpJJ, ZGTo2LG_ext, ZZTo4L, ZZZ, tZq_ll_ext, 
+            #WZTo3LNu,
+            ##WZTo3LNu_amcatnlo,
+            #TTWToLNu_ext,TTWToLNu_ext2,
+            #TTZToLLNuNu_ext,TTZToLLNuNu_m1to10,
+            #TTHnobb_pow, 
+            QCD_HT100to200,
+            QCD_HT200to300,
+            QCD_HT200to300_ext,
+            QCD_HT300to500,
+            QCD_HT300to500_ext,
+            QCD_HT500to700,
+            QCD_HT500to700_ext,
+            QCD_HT700to1000,
+            QCD_HT700to1000_ext,
+            QCD_HT1000to1500,
+            QCD_HT1000to1500_ext,
+            QCD_HT1500to2000,
+            QCD_HT1500to2000_ext,
+            QCD_HT2000toInf,
+            QCD_HT2000toInf_ext
             ]
    
 if not keepLHEWeights:
@@ -349,18 +391,10 @@ if forcedSplitFactor>0 or forcedFineSplitFactor>0:
         if forcedFineSplitFactor>0: c.fineSplitFactor = forcedFineSplitFactor
 
 # ____________________________________________________________________________________________________ ||
-from CMGTools.RA5.analyzers.LeptonJetProducer import LeptonJetProducer
-leptonJetProducer = cfg.Analyzer(
-        LeptonJetProducer, name='LeptonJetProducer',
-        #era = "2016",
-        )
-
-# ____________________________________________________________________________________________________ ||
 # SEQUENCE
 sequence = cfg.Sequence(susyCoreSequence+[
         ttHJetTauAna,
         ttHEventAna,
-        leptonJetProducer,
         treeProducer,
     ])
 preprocessor = None
@@ -389,7 +423,7 @@ elif test == '5':
     for comp in selectedComponents:
         comp.files = comp.files[:5]
         comp.splitFactor = 1
-        comp.fineSplitFactor = 1
+        comp.fineSplitFactor = 5
 elif test == "ra5-sync-mc":
     comp = cfg.MCComponent( files = ["root://eoscms.cern.ch//store/mc/RunIISpring16MiniAODv1/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/MINIAODSIM/PUSpring16_80X_mcRun2_asymptotic_2016_v3-v1/00000/6E02CA07-BA02-E611-A59E-14187741208F.root"], name="TTW_RA5_sync" )
     comp.triggers = []
