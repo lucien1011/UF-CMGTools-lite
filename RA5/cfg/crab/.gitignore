@@ -1,0 +1,5 @@
+*.sw*
+backup*/
+TEST_*/
+crab_*/
+crab.log
